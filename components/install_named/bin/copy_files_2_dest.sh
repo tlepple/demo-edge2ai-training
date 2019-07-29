@@ -34,11 +34,17 @@ GETDNSIP=`awk '/nameserver/{print $2}' /etc/resolv.conf`
 echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/ifcfg-eth0
 echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/ifcfg-eth0
 
-# restart named
-systemctl restart named
+sleep 2s
 
 # restart local network
 systemctl restart network
 
+sleep 5s
+
 # restart chronyd --> restarting network sometimes affects ntp
 systemctl restart chronyd
+
+sleep 5s
+
+# restart named
+systemctl restart named
