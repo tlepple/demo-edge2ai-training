@@ -7,14 +7,14 @@ dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 mkdir -p /etc/named/zones
 
 # make a backup of orig files
-yes | cp /etc/named.conf /etc/orig.named.conf
-yes | cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/orig.ifcfg-eth0
+cp -f /etc/named.conf /etc/orig.named.conf
+cp -f /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/orig.ifcfg-eth0
 
 #  copy files to DNS directory locations
-yes | cp $dir/../files/named.conf /etc/named.conf
-yes | cp $dir/../files/named.conf.local /etc/named/named.conf.local
-yes | cp $dir/../files/db.internal /etc/named/zones/db.internal
-yes | cp $dir/../files/db.reverse /etc/named/zones/db.reverse
+cp -f $dir/../files/named.conf /etc/named.conf
+cp -f $dir/../files/named.conf.local /etc/named/named.conf.local
+cp -f $dir/../files/db.internal /etc/named/zones/db.internal
+cp -f $dir/../files/db.reverse /etc/named/zones/db.reverse
 
 echo "copied files to final destination"
 

@@ -17,7 +17,7 @@ GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
 GETDNSIP=`awk '/nameserver/{print $2}' /etc/resolv.conf`
 
 # create the new file from template
-yes | cp $INSTALL_PROPS_TEMP ./$FINAL_INSTALL_PROPS_FILE
+cp -f $INSTALL_PROPS_TEMP ./$FINAL_INSTALL_PROPS_FILE
 
 # update the new file with the varaibles in install.properties file
 sed -i.bak -e "s/NAMED_HOSTNAME_VALUE/$GETHOST/g" ./$FINAL_INSTALL_PROPS_FILE
@@ -42,7 +42,7 @@ NAMED_CONF_LOCAL_TEMP=./templatefiles/named.conf.local.template
 FINAL_NAMED_CONF_LOCAL_FILE=named.conf.local
 
 # create the new file from template
-yes | cp $NAMED_CONF_LOCAL_TEMP ./files/$FINAL_NAMED_CONF_LOCAL_FILE
+cp -f $NAMED_CONF_LOCAL_TEMP ./files/$FINAL_NAMED_CONF_LOCAL_FILE
 
 # update the new file with the varaibles defined in install.properties file
 sed -i.bak -e "s/DOMAIN_NAME_VALUE/$DOMAIN_NAME/g" ./files/$FINAL_NAMED_CONF_LOCAL_FILE
@@ -58,7 +58,7 @@ DB_INTERNAL_TEMP=./templatefiles/db.internal.template
 FINAL_DB_INTERNAL_FILE=db.internal
 
 # create the new file from template
-yes | cp $DB_INTERNAL_TEMP ./files/$FINAL_DB_INTERNAL_FILE
+cp -f $DB_INTERNAL_TEMP ./files/$FINAL_DB_INTERNAL_FILE
 
 # update the new file with the varaibles defined in install.properties file
 sed -i.bak -e "s/DOMAIN_NAME_VALUE/$DOMAIN_NAME/g" ./files/$FINAL_DB_INTERNAL_FILE
@@ -75,7 +75,7 @@ DB_REVERSE_TEMP=./templatefiles/db.reverse.template
 FINAL_DB_REVERSE_FILE=db.reverse
 
 # create the new file from template
-yes | cp $DB_REVERSE_TEMP ./files/$FINAL_DB_REVERSE_FILE
+cp -f $DB_REVERSE_TEMP ./files/$FINAL_DB_REVERSE_FILE
 
 # update the new file with the varaibles defined in install.properties file
 sed -i.bak -e "s/ZONE_VALUE/$ZONE_VALUE/g" ./files/$FINAL_DB_REVERSE_FILE
@@ -90,7 +90,7 @@ NAMED_CONF_TEMP=./templatefiles/named.conf.template
 FINAL_NAMED_CONF_FILE=named.conf
 
 # create the new file from template
-yes | cp $NAMED_CONF_TEMP ./files/$FINAL_NAMED_CONF_FILE
+cp -f $NAMED_CONF_TEMP ./files/$FINAL_NAMED_CONF_FILE
 
 # update the new file with the varaibles defined in install.properties file
 sed -i.bak -e "s/FIRST_OCTET_VALUE/$FIRST_OCTET/g" ./files/$FINAL_NAMED_CONF_FILE
@@ -103,8 +103,8 @@ sed -i.bak -e "s/NAMED_IP_VALUE/$NAMED_IP/g" ./files/$FINAL_NAMED_CONF_FILE
 ########################################################
 ########################################################
 # cleanup the .bak files temp files it created
-yes | rm $dir/../files/*.bak
-yes | rm $dir/../*.bak
+rm -f $dir/../files/*.bak
+rm -f $dir/../*.bak
 
 echo "COMPLETED copy of properties to files"
 
