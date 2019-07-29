@@ -1,6 +1,6 @@
 # demo-edge2ai-training
 
-###  Testing
+###  Install DNS into a new micro node
 * In a new Centos Linux version 7.6+ host run the following:
 ```
 sudo -i
