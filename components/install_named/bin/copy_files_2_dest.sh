@@ -9,8 +9,6 @@ mkdir -p /etc/named/zones
 # make a backup of orig files
 yes | cp /etc/named.conf /etc/orig.named.conf
 yes | cp /etc/named/named.conf.local /etc/named/orig.named.conf.local
-yes | cp /etc/named/zones/db.internal /etc/named/zones/orig.db.internal
-yes | cp /etc/named/zones/db.reverse /etc/named/zones/orig.db.reverse
 yes | cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/orig.ifcfg-eth0
 
 #  copy files to DNS directory locations
