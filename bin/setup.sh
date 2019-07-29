@@ -7,7 +7,7 @@ yum install -y bind bind-utils
 #########################################################
 # prep named conf files for run time
 #########################################################
-cd ../components/install_named
+cd ./components/install_named
 
 #echo "pwd-->" `pwd`
 

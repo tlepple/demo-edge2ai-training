@@ -6,7 +6,7 @@
 sudo -i
 yum install -y git
 git clone https://github.com/tlepple/demo-edge2ai-training.git
-cd demo-edge2ai-training
+cd ~/demo-edge2ai-training
 . bin/setup.sh
 
 ```
