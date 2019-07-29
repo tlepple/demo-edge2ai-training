@@ -3,7 +3,34 @@
 # Calculate the location of this script.
 dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-# Load variables from install.properties file.
+
+#########################################################
+# prep install.properties file
+#########################################################
+INSTALL_PROPS_TEMP=./templatefiles/install.properties.template
+FINAL_INSTALL_PROPS_FILE=install.properties
+
+GETHOST=`hostname -f`
+GETSHORT=`hostname --short`
+GETDOMAIN=`hostname --domain`
+GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
+GETDNSIP=`awk '/nameserver/{print $2}' /etc/resolv.conf`
+
+# create the new file from template
+cp $INSTALL_PROPS_TEMP ./$FINAL_INSTALL_PROPS_FILE
+
+# update the new file with the varaibles in install.properties file
+sed -i.bak -e "s/NAMED_HOSTNAME_VALUE/$GETHOST/g" ./$FINAL_INSTALL_PROPS_FILE
+sed -i.bak -e "s/NAMED_SHORTNAME_VALUE/$GETSHORT/g" ./$FINAL_INSTALL_PROPS_FILE
+sed -i.bak -e "s/NAMED_IP_VALUE/$GETIP/g" ./$FINAL_INSTALL_PROPS_FILE
+sed -i.bak -e "s/DOMAIN_NAME_VALUE/$GETDOMAIN/g" ./$FINAL_INSTALL_PROPS_FILE
+sed -i.bak -e "s/CDSW_SHORTNAME_VALUE/$GETSHORT/g" ./$FINAL_INSTALL_PROPS_FILE
+sed -i.bak -e "s/CDSW_IP_VALUE/$GETIP/g" ./$FINAL_INSTALL_PROPS_FILE
+sed -i.bak -e "s/PRIMARY_DNSHOST_IP_VALUE/$GETDNSIP/g" ./$FINAL_INSTALL_PROPS_FILE
+
+#########################################################
+
+# Load variables from install.properties file for code below:
 . $dir/../install.properties
 
 
@@ -72,9 +99,12 @@ sed -i.bak -e "s/THIRD_OCTET_VALUE/$THIRD_OCTET/g" ./files/$FINAL_NAMED_CONF_FIL
 sed -i.bak -e "s/PRIMARY_DNSHOST_IP_VALUE/$PRIMARY_DNSHOST_IP/g" ./files/$FINAL_NAMED_CONF_FILE
 sed -i.bak -e "s/NAMED_IP_VALUE/$NAMED_IP/g" ./files/$FINAL_NAMED_CONF_FILE
 
+
+########################################################
 ########################################################
 # cleanup the .bak files temp files it created
 rm $dir/../files/*.bak
+rm $dir/../*.bak
 
 echo "COMPLETED copy of properties to files"
 
