@@ -1,16 +1,16 @@
 #! /bin/bash
 
 echo "delete entry"
-rm -i /etc/sysconfig/network-scripts/ifcfg-eth0
+/bin/rm -i /etc/sysconfig/network-scripts/ifcfg-eth0
 for PATH_DHCLIENT_PID in /var/run/dhclient*
-do
+ do
  export PATH_DHCLIENT_PID
  echo "PID=" $PATH_DHCLIENT_PID
  dhclient -r
  # Making sure it really truly stopped
- PIDVAL="`cat $PATH_DHCLIENT_PID`
+ PIDVAL=`cat $PATH_DHCLIENT_PID`
  kill $PIDVAL 
- rm -f $PATH_DHCLIENT_PID
-done
+ /bin/rm -f $PATH_DHCLIENT_PID
+ done
 
 echo "done with temp fix"
