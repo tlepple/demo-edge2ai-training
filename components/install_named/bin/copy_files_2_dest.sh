@@ -1,7 +1,12 @@
 #!/bin/bash
 
+
 # Calculate the location of this script.
 dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+
+# run the fix to address nic ens3 and network restart
+. $dir/temp-fix-nic-bug.sh
 
 # make direcotry
 mkdir -p /etc/named/zones
@@ -32,8 +37,10 @@ chmod 640 /etc/named/zones/db.reverse
 # copy dns to nic file --> /etc/sysconfig/network-scripts/ifcfg-eth0
 GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
 GETDNSIP=`awk '/nameserver/{print $2}' /etc/resolv.conf`
-echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/ifcfg-eth0
-echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/ifcfg-eth0
+#echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/ifcfg-eth0
+#echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/ifcfg-eth0
+echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/ifcfg-ens3
+echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/ifcfg-ens3
 
 echo "restarting some services..."
 sleep 2s
