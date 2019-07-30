@@ -59,4 +59,7 @@ sleep 5s
 # restart named
 systemctl restart named
 
+# ensure named will run on a reboot
+systemctl enable named
+
 echo "services have been restarted"
