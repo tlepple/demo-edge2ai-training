@@ -1,7 +1,7 @@
 #! /bin/bash
 
 echo "delete entry"
-/bin/rm -i /etc/sysconfig/network-scripts/ifcfg-eth0
+yes | /bin/rm -i /etc/sysconfig/network-scripts/ifcfg-eth0
 for PATH_DHCLIENT_PID in /var/run/dhclient*
  do
  export PATH_DHCLIENT_PID
