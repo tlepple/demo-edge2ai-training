@@ -40,7 +40,7 @@ recursion yes;
 forwarders {
 	PRIMARY_DNSHOST_IP_VALUE;
 };
-forward only;
+forward first;
 
 /*
  End Forward Entry
