@@ -1,9 +1,5 @@
 #!/bin/bash
 
-#########################################################
-# load utility functions
-#########################################################
-. utilities.sh
 
 #########################################################
 # BEGIN
@@ -38,7 +34,6 @@ mkdir -p /etc/named/zones
 /bin/cp $dir/../files/db.internal /etc/named/zones/db.internal
 /bin/cp $dir/../files/db.reverse /etc/named/zones/db.reverse
 
-echo "copied files to final destination"
 
 # change owner and permssions
 chown root:named /etc/named.conf
