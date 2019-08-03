@@ -11,7 +11,7 @@ log "Starting Script prepare_named_setup.sh..."
 #########################################################
 log "prep install.properties file"
 
-INSTALL_PROPS_TEMP= $dir/../templatefiles/install.properties.template
+INSTALL_PROPS_TEMP=$dir/../templatefiles/install.properties.template
 FINAL_INSTALL_PROPS_FILE=install.properties
 
 GETHOST=`hostname -f`
