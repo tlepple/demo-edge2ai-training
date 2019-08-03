@@ -1,12 +1,21 @@
 #!/bin/bash
 
-# Calculate the location of this script.
-dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+#########################################################
+# load utility functions
+#########################################################
+. utilities.sh
+
+#########################################################
+# BEGIN
+#########################################################
 
 
+log "Starting Script prepare_named_setup.sh..."
 #########################################################
 # prep install.properties file
 #########################################################
+log "prep install.properties file"
+
 INSTALL_PROPS_TEMP=./templatefiles/install.properties.template
 FINAL_INSTALL_PROPS_FILE=install.properties
 
@@ -28,15 +37,21 @@ sed -i.bak -e "s/CDSW_SHORTNAME_VALUE/$GETSHORT/g" ./$FINAL_INSTALL_PROPS_FILE
 sed -i.bak -e "s/CDSW_IP_VALUE/$GETIP/g" ./$FINAL_INSTALL_PROPS_FILE
 sed -i.bak -e "s/PRIMARY_DNSHOST_IP_VALUE/$GETDNSIP/g" ./$FINAL_INSTALL_PROPS_FILE
 
-#########################################################
+log "completed prep install.properties file"
 
+#########################################################
 # Load variables from install.properties file for code below:
+#########################################################
+log "Load install.properties"
+
 . $dir/../install.properties
 
 
 #########################################################
 # prep named.conf.local file 
 #########################################################
+log "prep named.conf.local file"
+
 NAMED_CONF_LOCAL_TEMP=./templatefiles/named.conf.local.template
 
 FINAL_NAMED_CONF_LOCAL_FILE=named.conf.local
@@ -51,9 +66,12 @@ sed -i.bak -e "s/FIRST_OCTET_VALUE/$FIRST_OCTET/g" ./files/$FINAL_NAMED_CONF_LOC
 sed -i.bak -e "s/SECOND_OCTET_VALUE/$SECOND_OCTET/g" ./files/$FINAL_NAMED_CONF_LOCAL_FILE
 sed -i.bak -e "s/THIRD_OCTET_VALUE/$THIRD_OCTET/g" ./files/$FINAL_NAMED_CONF_LOCAL_FILE
 
+log "completed prep named.conf.local file"
 #########################################################
 # prep db.internal file
 #########################################################
+log "prep db.internal file"
+
 DB_INTERNAL_TEMP=./templatefiles/db.internal.template
 FINAL_DB_INTERNAL_FILE=db.internal
 
@@ -68,9 +86,13 @@ sed -i.bak -e "s/NAMED_IP_VALUE/$NAMED_IP/g" ./files/$FINAL_DB_INTERNAL_FILE
 sed -i.bak -e "s/CDSW_SHORT_HOSTNAME_VALUE/$CDSW_SHORT_HOSTNAME/g" ./files/$FINAL_DB_INTERNAL_FILE
 sed -i.bak -e "s/CDSW_INTERNAL_IP_VALUE/$CDSW_INTERNAL_IP/g" ./files/$FINAL_DB_INTERNAL_FILE
 
+log "completed prep db.internal file"
+
 #########################################################
 # prep db.reverse file
 #########################################################
+log "prep db.reverse file"
+
 DB_REVERSE_TEMP=./templatefiles/db.reverse.template
 FINAL_DB_REVERSE_FILE=db.reverse
 
@@ -83,9 +105,13 @@ sed -i.bak -e "s/DOMAIN_NAME_VALUE/$DOMAIN_NAME/g" ./files/$FINAL_DB_REVERSE_FIL
 sed -i.bak -e "s/NAMED_HOSTNAME_VALUE/$NAMED_HOSTNAME/g" ./files/$FINAL_DB_REVERSE_FILE
 sed -i.bak -e "s/LAST_OCTET_VALUE/$LAST_OCTET/g" ./files/$FINAL_DB_REVERSE_FILE
 
+log "completed prep db.reverse file"
+
 #########################################################
 # prep named.conf file
 #########################################################
+log "prep named.conf file"
+
 NAMED_CONF_TEMP=./templatefiles/named.conf.template
 FINAL_NAMED_CONF_FILE=named.conf
 
@@ -99,14 +125,16 @@ sed -i.bak -e "s/THIRD_OCTET_VALUE/$THIRD_OCTET/g" ./files/$FINAL_NAMED_CONF_FIL
 sed -i.bak -e "s/PRIMARY_DNSHOST_IP_VALUE/$PRIMARY_DNSHOST_IP/g" ./files/$FINAL_NAMED_CONF_FILE
 sed -i.bak -e "s/NAMED_IP_VALUE/$NAMED_IP/g" ./files/$FINAL_NAMED_CONF_FILE
 
+log "completed prep named.conf file"
 
 ########################################################
-########################################################
 # cleanup the .bak files temp files it created
+########################################################
+log "cleanup temp files created in this process..."
+
 rm -f $dir/../files/*.bak
 rm -f $dir/../*.bak
 
-echo "COMPLETED copy of properties to files"
-
+log "COMPLETED Script prepare_named_setup.sh"
 
 ########################################################
