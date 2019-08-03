@@ -1,11 +1,6 @@
 #!/bin/bash
 
 #########################################################
-# load utility functions
-#########################################################
-. utilities.sh
-
-#########################################################
 # BEGIN
 #########################################################
 
@@ -16,7 +11,7 @@ log "Starting Script prepare_named_setup.sh..."
 #########################################################
 log "prep install.properties file"
 
-INSTALL_PROPS_TEMP=./templatefiles/install.properties.template
+INSTALL_PROPS_TEMP= $dir/../templatefiles/install.properties.template
 FINAL_INSTALL_PROPS_FILE=install.properties
 
 GETHOST=`hostname -f`
@@ -52,7 +47,7 @@ log "Load install.properties"
 #########################################################
 log "prep named.conf.local file"
 
-NAMED_CONF_LOCAL_TEMP=./templatefiles/named.conf.local.template
+NAMED_CONF_LOCAL_TEMP=$dir/../templatefiles/named.conf.local.template
 
 FINAL_NAMED_CONF_LOCAL_FILE=named.conf.local
 
@@ -72,7 +67,7 @@ log "completed prep named.conf.local file"
 #########################################################
 log "prep db.internal file"
 
-DB_INTERNAL_TEMP=./templatefiles/db.internal.template
+DB_INTERNAL_TEMP=$dir/../templatefiles/db.internal.template
 FINAL_DB_INTERNAL_FILE=db.internal
 
 # create the new file from template
@@ -93,7 +88,7 @@ log "completed prep db.internal file"
 #########################################################
 log "prep db.reverse file"
 
-DB_REVERSE_TEMP=./templatefiles/db.reverse.template
+DB_REVERSE_TEMP=$dir/../templatefiles/db.reverse.template
 FINAL_DB_REVERSE_FILE=db.reverse
 
 # create the new file from template
@@ -112,7 +107,7 @@ log "completed prep db.reverse file"
 #########################################################
 log "prep named.conf file"
 
-NAMED_CONF_TEMP=./templatefiles/named.conf.template
+NAMED_CONF_TEMP=$dir/../templatefiles/named.conf.template
 FINAL_NAMED_CONF_FILE=named.conf
 
 # create the new file from template
