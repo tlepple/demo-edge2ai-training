@@ -1,6 +1,17 @@
 #! /bin/bash
 
-echo "delete entry"
+#########################################################
+# load utility functions
+#########################################################
+. utilities.sh
+
+log "BEGIN temp-fix-nic-bug.sh"
+#########################################################
+# prep named conf files for run time
+#########################################################
+
+
+log "delete network conf file"
 yes | /bin/rm -i /etc/sysconfig/network-scripts/ifcfg-eth0
 for PATH_DHCLIENT_PID in /var/run/dhclient*
  do
@@ -13,4 +24,4 @@ for PATH_DHCLIENT_PID in /var/run/dhclient*
  /bin/rm -f $PATH_DHCLIENT_PID
  done
 
-echo "done with temp fix"
+log "COMPLETED temp-fix-nic-bug.sh"

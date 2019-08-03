@@ -1,12 +1,28 @@
 #!/bin/bash
 
+#########################################################
+# load utility functions
+#########################################################
+. utilities.sh
 
-# Calculate the location of this script.
-dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+#########################################################
+# BEGIN
+#########################################################
+log "Begin copy_files_2_dest.sh"
 
 
+#########################################################
+# identify network and fix items
+#########################################################
 # run the fix to address nic ens3 and network restart
-. $dir/temp-fix-nic-bug.sh
+#. $dir/temp-fix-nic-bug.sh
+
+
+#########################################################
+# backup some orig files
+#########################################################
+log "Begin backups or orig files"
+
 
 # make direcotry
 mkdir -p /etc/named/zones
@@ -38,12 +54,17 @@ chmod 640 /etc/named/zones/db.reverse
 # copy dns to nic file --> /etc/sysconfig/network-scripts/ifcfg-eth0
 GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
 GETDNSIP=`awk '/nameserver/{print $2}' /etc/resolv.conf`
-#echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/ifcfg-eth0
-#echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/ifcfg-eth0
+echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/ifcfg-eth0
+echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/ifcfg-eth0
 echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/ifcfg-ens3
 echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/ifcfg-ens3
 
-echo "restarting some services..."
+log "end backup of files"
+
+#########################################################
+# backup some orig files
+#########################################################
+log "restarting network"
 sleep 2s
 
 # restart local network
@@ -52,14 +73,18 @@ systemctl restart network
 sleep 5s
 
 # restart chronyd --> restarting network sometimes affects ntp
+log "restarting chronyd"
 systemctl restart chronyd
 
 sleep 5s
 
 # restart named
+log "restart named"
 systemctl restart named
 
 # ensure named will run on a reboot
 systemctl enable named
 
-echo "services have been restarted"
+log "services have been restarted"
+
+log "Completed copy_files_2_dest.sh"
