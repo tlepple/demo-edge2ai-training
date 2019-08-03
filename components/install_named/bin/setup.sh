@@ -36,9 +36,9 @@ yum install -y bind bind-utils
 log "prep conf files for run time"
 
 log "preparing conf files for DNS..."
-. prepare_named_setup.sh
+. bin/prepare_named_setup.sh
 
 log "running copy commands..."
-. copy_files_2_dest.sh
+. bin/copy_files_2_dest.sh
 
 log "COMPLETED setup.sh"
