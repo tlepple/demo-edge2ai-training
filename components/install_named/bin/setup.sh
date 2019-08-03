@@ -3,7 +3,9 @@
 #########################################################
 # import untility functions
 #########################################################
-. utilities.sh
+dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+. $dir/utilities.sh
 
 #########################################################
 # BEGIN
@@ -36,9 +38,10 @@ yum install -y bind bind-utils
 log "prep conf files for run time"
 
 log "preparing conf files for DNS..."
-. bin/prepare_named_setup.sh
+. $dir/prepare_named_setup.sh
 
 log "running copy commands..."
-. bin/copy_files_2_dest.sh
+. $dir/copy_files_2_dest.sh
+
 
 log "COMPLETED setup.sh"
