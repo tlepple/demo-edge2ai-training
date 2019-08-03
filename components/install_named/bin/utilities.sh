@@ -6,7 +6,7 @@
 # logging function
 log() {
     echo -e "[$(date)] [$BASH_SOURCE: $BASH_LINENO] : $*"
-    echo -e "[$(date)] [$BASH_SOURCE: $BASH_LINENO] : $*" >> test-setup.log
+    echo -e "[$(date)] [$BASH_SOURCE: $BASH_LINENO] : $*" >> setup.log
 }
 
 # get the directory currently running in

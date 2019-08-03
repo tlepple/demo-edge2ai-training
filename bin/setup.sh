@@ -1,32 +1,28 @@
 #!/bin/bash
 
 #########################################################
-# add aws internal time server for chronyd
+# untility functions
 #########################################################
-INTERNAL_TIME_SERVER=169.254.169.123 # Amazon Time Sync Service
+# logging function
+log() {
+    echo -e "[$(date)] [$BASH_SOURCE: $BASH_LINENO] : $*"
+    echo -e "[$(date)] [$BASH_SOURCE: $BASH_LINENO] : $*" >> setup.log
+}
 
-# Set up chronyd with the internal time server
-if ! grep -q "${INTERNAL_TIME_SERVER}" /etc/chrony.conf; then
-  echo "server ${INTERNAL_TIME_SERVER} prefer iburst" >> /etc/chrony.conf
-  systemctl restart chronyd.service
-fi
-
-#########################################################
-# Install bind and utilities
-#########################################################
-yum install -y bind bind-utils
-
+# get the directory currently running in
+orig_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 #########################################################
-# prep named conf files for run time
+# Begin
 #########################################################
-cd ./components/install_named
 
-#echo "pwd-->" `pwd`
+log "BEGIN setup.sh"
 
-echo "preparing conf files for DNS..."
-. bin/prepare_named_setup.sh
+log "Install Component Named"
 
-echo "running copy commands..."
-. bin/copy_files_2_dest.sh
+cd ../components/install_named/bin
 
+. setup.sh
+
+. $orig_dir
+log "Completed setup.sh"
