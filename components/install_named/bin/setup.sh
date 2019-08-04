@@ -1,11 +1,15 @@
 #!/bin/bash
 
 #########################################################
-# import untility functions
+# utility functions
 #########################################################
 dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-. $dir/utilities.sh
+# logging function
+log() {
+    echo -e "[$(date)] [$BASH_SOURCE: $BASH_LINENO] : $*"
+    echo -e "[$(date)] [$BASH_SOURCE: $BASH_LINENO] : $*" >> setup.log
+}
 
 #########################################################
 # BEGIN
