@@ -24,7 +24,7 @@ NIC_FILENAME="ifcfg-"$ACTIVE_NIC
 # backup orig files
 /bin/cp /etc/sysconfig/network-scripts/$NIC_FILENAME /etc/sysconfig/network-scripts/orig.$NIC_FILENAME
 
-if [ $ACTIVE_NIC -ne 'eth0' ]; then
+if [ $ACTIVE_NIC != 'eth0' ]; then
     # commands here for non standard nic... ie: ens3
     echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/$NIC_FILENAME
     echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/$NIC_FILENAME
