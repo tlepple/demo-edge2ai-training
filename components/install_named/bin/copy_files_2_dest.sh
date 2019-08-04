@@ -19,7 +19,7 @@ GETDNSIP=`awk '/nameserver/{print $2}' /etc/resolv.conf`
 
 # identify the value set for active nic
 ACTIVE_NIC=$(ifconfig -a | grep "UP,BROADCAST,RUNNING" | awk '{print $1}' | sed 's/.$//')
-NIC_FILENAME=ifcfg-"$ACTIVE_NIC
+NIC_FILENAME="ifcfg-"$ACTIVE_NIC
 
 # backup orig files
 /bin/cp /etc/sysconfig/network-scripts/$NIC_FILENAME /etc/sysconfig/network-scripts/orig.$NIC_FILENAME
