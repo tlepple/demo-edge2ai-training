@@ -24,12 +24,13 @@ NIC_FILENAME="ifcfg-"$ACTIVE_NIC
 # backup orig files
 /bin/cp /etc/sysconfig/network-scripts/$NIC_FILENAME /etc/sysconfig/network-scripts/orig.$NIC_FILENAME
 
-if [ $ACTIVE_NIC != 'eth0' ]; then
+if [ $ACTIVE_NIC -ne 'eth0' ]; then
     # commands here for non standard nic... ie: ens3
     echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/$NIC_FILENAME
     echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/$NIC_FILENAME
     yes | /bin/rm -i /etc/sysconfig/network-scripts/$NIC_FILENAME
-    do
+    for PATH_DHCLIENT_PID in /var/run/dhclient*
+     do
        export PATH_DHCLIENT_PID
        echo "PID=" $PATH_DHCLIENT_PID
        dhclient -r
@@ -37,7 +38,7 @@ if [ $ACTIVE_NIC != 'eth0' ]; then
        PIDVAL=`cat $PATH_DHCLIENT_PID`
        kill $PIDVAL 
       /bin/rm -f $PATH_DHCLIENT_PID
-    done
+     done
 else
     # commands here for standard nic... ie: eth0
     echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/$NIC_FILENAME
