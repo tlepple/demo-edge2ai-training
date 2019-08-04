@@ -10,14 +10,47 @@ log "Begin copy_files_2_dest.sh"
 #########################################################
 # identify network and fix items
 #########################################################
-# run the fix to address nic ens3 and network restart
-#. $dir/temp-fix-nic-bug.sh
 
+log "Identify Active NIC and fix issues..."
+
+# set some ip and dns variables:
+GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
+GETDNSIP=`awk '/nameserver/{print $2}' /etc/resolv.conf`
+
+# identify the value set for active nic
+ACTIVE_NIC=$(ifconfig -a | grep "UP,BROADCAST,RUNNING" | awk '{print $1}' | sed 's/.$//')
+NIC_FILENAME=ifcfg-"$ACTIVE_NIC
+
+# backup orig files
+/bin/cp /etc/sysconfig/network-scripts/$NIC_FILENAME /etc/sysconfig/network-scripts/orig.$NIC_FILENAME
+
+if [ $ACTIVE_NIC != 'eth0' ]; then
+    # commands here for non standard nic... ie: ens3
+    echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/$NIC_FILENAME
+    echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/$NIC_FILENAME
+    yes | /bin/rm -i /etc/sysconfig/network-scripts/$NIC_FILENAME
+    do
+       export PATH_DHCLIENT_PID
+       echo "PID=" $PATH_DHCLIENT_PID
+       dhclient -r
+       # Making sure it really truly stopped
+       PIDVAL=`cat $PATH_DHCLIENT_PID`
+       kill $PIDVAL 
+      /bin/rm -f $PATH_DHCLIENT_PID
+    done
+else
+    # commands here for standard nic... ie: eth0
+    echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/$NIC_FILENAME
+    echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/$NIC_FILENAME
+
+fi
+
+log "Completed active network fixes"
 
 #########################################################
 # backup some orig files
 #########################################################
-log "Begin backups or orig files"
+log "Begin backups of orig files"
 
 
 # make direcotry
@@ -25,8 +58,6 @@ mkdir -p /etc/named/zones
 
 # make a backup of orig files
 /bin/cp /etc/named.conf /etc/orig.named.conf
-#/bin/cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/orig.ifcfg-eth0
-
 
 #  copy files to DNS directory locations
 /bin/cp $dir/../files/named.conf /etc/named.conf
@@ -46,18 +77,10 @@ chmod 640 /etc/named/named.conf.local
 chmod 640 /etc/named/zones/db.internal
 chmod 640 /etc/named/zones/db.reverse
 
-# copy dns to nic file --> /etc/sysconfig/network-scripts/ifcfg-eth0
-GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
-GETDNSIP=`awk '/nameserver/{print $2}' /etc/resolv.conf`
-echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/ifcfg-eth0
-echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/ifcfg-eth0
-echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/ifcfg-ens3
-echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/ifcfg-ens3
-
 log "end backup of files"
 
 #########################################################
-# backup some orig files
+# restart some services
 #########################################################
 log "restarting network"
 sleep 2s
