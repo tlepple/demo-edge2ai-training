@@ -28,7 +28,7 @@ if [ $ACTIVE_NIC != 'eth0' ]; then
     # commands here for non standard nic... ie: ens3
     echo "DNS1="$GETIP >> /etc/sysconfig/network-scripts/$NIC_FILENAME
     echo "DNS2="$GETDNSIP >> /etc/sysconfig/network-scripts/$NIC_FILENAME
-    /bin/cp /etc/sysconfig/network-scripts/fcfg-eth0 /etc/sysconfig/network-scripts/orig.ifcfg-eth0
+    /bin/cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/orig.ifcfg-eth0
     yes | /bin/rm -i /etc/sysconfig/network-scripts/ifcfg-eth0
     for PATH_DHCLIENT_PID in /var/run/dhclient*
      do
