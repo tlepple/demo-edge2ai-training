@@ -109,5 +109,48 @@ pip install impyla
 log "create roles and permissions"
 superset init
 
+# set the admin user and pwd
+log "create the admin user..."
+
+# set variables to echo into script
+superset_user_fname=admin
+superset_user_lname=user
+superset_user_email=admin@fab.org
+superset_user_pwd=admin
+superset_confirm_pwd=admin
+
+# start the script
+export FLASK_APP=superset
+{ echo $superset_user_fname; echo $superset_user_lname; echo $superset_user_email; echo $superset_user_pwd; echo $superset_confirm_pwd; } | flask fab create-admin
+
 # deactivate the virtualenv
 deactivate
+
+#########################################################
+# setup systemd components for start | stop | restart | status
+#########################################################
+
+log "create systemd components for superset"
+cp $dir/../files/superset.service.template ~/superset-install-oneNode/superset.service
+
+# create a softlink to the file
+ln -s ~/superset-install-oneNode/superset.service /etc/systemd/system/superset.service
+
+# copy shell startup script to destination
+cp $dir/../files/start_superset.sh ~/superset-install-oneNode/start_superset.sh
+
+# create a softlink to the script
+ln -s ~/superset-install-oneNode/start_superset.sh /etc/init.d/superset
+
+# restart the daemon so systemd can see this section
+log "restart of systemctl daemon"
+systemctl daemon-reload
+
+# start superset
+log "starting superset"
+systemctl start superset
+
+#########################################################
+#  END setup of superset
+#########################################################
+log "COMPLETED superset setup.sh"
