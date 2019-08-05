@@ -5,10 +5,12 @@
 #########################################################
 dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
+log_dir=`pwd`
+
 # logging function
 log() {
     echo -e "[$(date)] [$BASH_SOURCE: $BASH_LINENO] : $*"
-    echo -e "[$(date)] [$BASH_SOURCE: $BASH_LINENO] : $*" >> setup.log
+    echo -e "[$(date)] [$BASH_SOURCE: $BASH_LINENO] : $*" >> $log_dir/setup.log
 }
 
 #########################################################
