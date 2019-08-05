@@ -113,6 +113,7 @@ superset init
 log "create the admin user..."
 
 # set variables to echo into script
+superset_username=admin
 superset_user_fname=admin
 superset_user_lname=user
 superset_user_email=admin@fab.org
@@ -121,7 +122,7 @@ superset_confirm_pwd=admin
 
 # start the script
 export FLASK_APP=superset
-{ echo $superset_user_fname; echo $superset_user_lname; echo $superset_user_email; echo $superset_user_pwd; echo $superset_confirm_pwd; } | flask fab create-admin
+{ echo $superset_username; echo $superset_user_fname; echo $superset_user_lname; echo $superset_user_email; echo $superset_user_pwd; echo $superset_confirm_pwd; } | flask fab create-admin
 
 # deactivate the virtualenv
 deactivate
