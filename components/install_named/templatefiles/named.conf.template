@@ -1,10 +1,10 @@
 options{
-allow-recursion  { localhost; NAMED_IP_VALUE; };
-allow-query-cache  { localhost; NAMED_IP_VALUE; };
-allow-query  { localhost; NAMED_IP_VALUE; };
+allow-recursion  { localhost; NAMED_IP_VALUE; 100.66.0.0/0; };
+allow-query-cache  { localhost; NAMED_IP_VALUE; 100.66.0.0/0; };
+allow-query  { localhost; NAMED_IP_VALUE; 100.66.0.0/0; };
 
 listen-on  port 53  { 127.0.0.1; NAMED_IP_VALUE; };
-listen-on-v6  port 53  { localhost; };
+listen-on-v6  port 53  { ::1; };
 
 dnssec-enable yes;
 dnssec-validation auto;
@@ -26,9 +26,6 @@ dump-file  "/var/named/data/cache_dump.db";
 statistics-file  "/var/named/stats/named_stats.txt";
 memstatistics-file  "/var/named/stats/named_mem_stats.txt";
 
-rate-limit {
-    responses-per-second 10;
-    log-only yes;
 };
 
 };
