@@ -28,8 +28,6 @@ memstatistics-file  "/var/named/stats/named_mem_stats.txt";
 
 };
 
-};
-
 zone "." {
 type hint;
 file "named.ca";};
