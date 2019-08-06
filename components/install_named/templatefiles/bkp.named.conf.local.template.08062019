@@ -1,10 +1,10 @@
 zone "ZONE_VALUE.in-addr.arpa" IN {
   type master;
   file "/etc/named/zones/db.reverse";
-  allow-update {NAMED_IP_VALUE;};
+  allow-update {FIRST_OCTET_VALUE.SECOND_OCTET_VALUE.THIRD_OCTET_VALUE.0/16;};
 };
 zone "DOMAIN_NAME_VALUE" IN {
   type master;
   file "/etc/named/zones/db.internal";
-  allow-update {NAMED_IP_VALUE;};
+  allow-update {FIRST_OCTET_VALUE.SECOND_OCTET_VALUE.THIRD_OCTET_VALUE.0/16;};
 };

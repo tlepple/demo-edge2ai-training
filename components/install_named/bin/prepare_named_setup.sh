@@ -60,6 +60,7 @@ sed -i.bak -e "s/ZONE_VALUE/$ZONE_VALUE/g" ./files/$FINAL_NAMED_CONF_LOCAL_FILE
 sed -i.bak -e "s/FIRST_OCTET_VALUE/$FIRST_OCTET/g" ./files/$FINAL_NAMED_CONF_LOCAL_FILE
 sed -i.bak -e "s/SECOND_OCTET_VALUE/$SECOND_OCTET/g" ./files/$FINAL_NAMED_CONF_LOCAL_FILE
 sed -i.bak -e "s/THIRD_OCTET_VALUE/$THIRD_OCTET/g" ./files/$FINAL_NAMED_CONF_LOCAL_FILE
+sed -i.bak -e "s/NAMED_IP_VALUE/$NAMED_IP/g" ./files/$FINAL_NAMED_CONF_FILE
 
 log "completed prep named.conf.local file"
 #########################################################

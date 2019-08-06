@@ -1,14 +1,15 @@
 options{
-allow-recursion  { any; };
-allow-query-cache  { any; };
-allow-query  { any; };
+allow-recursion  { localhost; NAMED_IP_VALUE; };
+allow-query-cache  { localhost; NAMED_IP_VALUE; };
+allow-query  { localhost; NAMED_IP_VALUE; };
 
-listen-on  port 53  { any; };
-listen-on-v6  port 53  { any; };
+listen-on  port 53  { 127.0.0.1; NAMED_IP_VALUE; };
+listen-on-v6  port 53  { localhost; };
 
 dnssec-enable yes;
-dnssec-validation yes;
+dnssec-validation auto;
 dnssec-lookaside auto;
+auth-nxdomain no;    # conform to RFC1035
 
 zone-statistics yes;
 max-cache-ttl 3600;
@@ -17,6 +18,8 @@ max-ncache-ttl 3600;
 /* Path to ISC DLV key */
 bindkeys-file "/etc/named.iscdlv.key";
 managed-keys-directory "/var/named/dynamic";
+pid-file "/run/named/named.pid";
+session-keyfile "/run/named/session.key";
 
 directory  "/var/named";
 dump-file  "/var/named/data/cache_dump.db";
@@ -36,6 +39,6 @@ file "named.ca";};
 
 include "/etc/named.rfc1912.zones";
 include "/etc/named.root.key";
-/* include a new conf file where we can define our our settings */
+/* include a new conf file where we can define our own settings */
 include "/etc/named/named.conf.local";
 
