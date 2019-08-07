@@ -25,19 +25,19 @@ log "Begin install of DNS"
 
 cd $dir/../components/install_named
 
-echo "is this DNS dir --> "`pwd`
+#echo "is this DNS dir --> "`pwd`
 # run the install of bind
 #./bin/setup.sh
 
 #sleep 20 
 
 # return to starting dir
-echo "ending dir is --> "`pwd`
+#echo "ending dir is --> "`pwd`
 cd $dir
 log "Completed install of DNS"
 
-echo "current dir at the end of this script--> "`pwd`
-echo "current value of dir variable is -->"$dir
+#echo "current dir at the end of this script--> "`pwd`
+#echo "current value of dir variable is -->"$dir
 
 
 #########################################################
@@ -48,17 +48,58 @@ log "Begin install of forkedOneNode"
 
 cd $dir/../components/install_forkedOneNode
 
-echo "is this forkedOneNode dir --> "`pwd`
+#echo "is this forkedOneNode dir --> "`pwd`
 # run the install of forkedOneNode
-./setup.sh aws cdsw_template.json /dev/xvdc
+
+#need to pass in some variables
+#./setup.sh aws cdsw_template.json /dev/xvdc
 
 #sleep 20
 
 # return to starting dir
-echo "ending dir of this stage is --> "`pwd`
+#echo "ending dir of this stage is --> "`pwd`
 cd $dir
 log "Completed install of forkedOneNode"
 
-echo "current dir at the end of this stage --> "`pwd`
+#echo "current dir at the end of this stage --> "`pwd`
+#echo "current value of dir variable is -->"$dir
+
+#########################################################
+# Install component "Supeset"
+#########################################################
+log "check status of cdsw before starting superset install"
+
+echo "current dir before status check --> "`pwd`
+#check cdsw status
+./cdsw_status-testing.sh
+
+# change to dir for superset
+cd $dir/../components/install_superset
+echo "current dir at this stage --> "`pwd`
+#./bin/setup.sh
+
+# return to starting dir
+echo "ending dir at install of superset is --> "`pwd`
+cd $dir
+log "Completed install of Superset"
+
+echo "current dir at the end of this script--> "`pwd`
 echo "current value of dir variable is -->"$dir
 
+#########################################################
+# Print services URLs
+#########################################################
+log "echo services URLs"
+
+# run the echo serivces
+./echo_service_conns.sh
+
+echo "change to original directory at start of scripts"
+cd $starting_dir
+echo "here is my final pwd -->" `pwd`
+
+echo
+echo "---------------------------------------------------------------------------"
+log "COMPLETED ALL SETUP!!!"
+echo "---------------------------------------------------------------------------"
+echo
