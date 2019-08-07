@@ -24,7 +24,7 @@ log "BEGIN setup.sh"
 #########################################################
 log "Begin install of DNS"
 
-cd $dir/components/install_named
+cd $dir/../components/install_named
 
 # run the install
 $dir/bin/setup.sh
