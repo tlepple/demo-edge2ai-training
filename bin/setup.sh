@@ -1,6 +1,34 @@
 #!/bin/bash
 
 #########################################################
+# Input parameters
+#########################################################
+
+case "$1" in
+        aws)
+           # echo "server 169.254.169.123 prefer iburst minpoll 4 maxpoll 4" >> /etc/chrony.conf
+           # systemctl restart chronyd
+            ;;
+        azure)
+           # umount /mnt/resource
+           # mount /dev/sdb1 /opt
+            ;;
+        gcp)
+            ;;
+        *)
+            echo $"Usage: $0 {aws|azure|gcp} template-file [docker-device]"
+            echo $"example: ./setup.sh azure default_template.json"
+            echo $"example: ./setup.sh aws cdsw_template.json /dev/xvdb"
+            exit 1
+esac
+
+CLOUD_PROVIDER=$1
+
+CLUSTER_TEMPLATE=$2
+# ugly, but for now the docker device has to be put by the user
+BLOCK_DEVICE_LOCATION=$3
+
+#########################################################
 # utility functions
 #########################################################
 dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
@@ -52,7 +80,8 @@ cd $dir/../components/install_forkedOneNode
 # run the install of forkedOneNode
 
 #need to pass in some variables
-./setup.sh aws cdsw_template.json /dev/xvdb
+#./setup.sh aws cdsw_template.json /dev/xvdc
+./setup.sh $CLOUD_PROVIDER $CLUSTER_TEMPLATE $BLOCK_DEVICE_LOCATION
 
 #sleep 20
 
@@ -82,6 +111,8 @@ echo "Full Output of CDSW status..."
 echo
 echo
 cdsw status
+echo
+echo
 
 #check cdsw status again
 ./cdsw_status-testing.sh
