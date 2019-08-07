@@ -1,10 +1,9 @@
-I Training
+# Edge2AI Training
 
 ---
 ---
 
 * This repository contains code that will automate the install of some CDH services and detail out some training steps you can complete on your own.
-
 
 ---
 ---
