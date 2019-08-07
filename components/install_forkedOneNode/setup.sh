@@ -175,4 +175,5 @@ python ./create_cluster.py $TEMPLATE
 service efm start
 #service minifi start
 
-echo "-- At this point you can login into Cloudera Manager host on port 7180 and follow the deployment of the cluster"
+GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
+echo "-- CM is ready.  Start a proxy and point your Chrome at --> http//$GETIP:7180 to follow progress in CM"
