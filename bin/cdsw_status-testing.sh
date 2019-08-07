@@ -12,9 +12,9 @@ TEST_STATUS_CHECK=`cdsw status | tail -1`
 #########################################################
 
 check_cdsw(){
-  echo "Checking CDSW status (for 5 min max)"
+  echo "Checking CDSW status (for 10 min max)"
   counter=0
-  while [ $counter -lt 300 ]; do
+  while [ $counter -lt 600 ]; do
       
     STATUS_CHECK=`cdsw status | tail -1`
     if [ "$STATUS_CHECK" != 'Cloudera Data Science Workbench is ready!' ]; then
@@ -28,7 +28,7 @@ check_cdsw(){
       return
     fi
   done
-  echo "CDSW is not ready after 5 minutes.  Exiting...";
+  echo "CDSW is not ready after 10 minutes.  Exiting...";
   exit 1
 
   
