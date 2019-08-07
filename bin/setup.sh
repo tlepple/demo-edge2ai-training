@@ -27,7 +27,7 @@ cd $dir/../components/install_named
 
 #echo "is this DNS dir --> "`pwd`
 # run the install of bind
-#./bin/setup.sh
+./bin/setup.sh
 
 #sleep 20 
 
@@ -52,7 +52,7 @@ cd $dir/../components/install_forkedOneNode
 # run the install of forkedOneNode
 
 #need to pass in some variables
-#./setup.sh aws cdsw_template.json /dev/xvdc
+./setup.sh aws cdsw_template.json /dev/xvdb
 
 #sleep 20
 
@@ -67,16 +67,29 @@ log "Completed install of forkedOneNode"
 #########################################################
 # Install component "Supeset"
 #########################################################
+# Check CDSW again...  Runs long sometimes
+
 log "check status of cdsw before starting superset install"
 
-echo "current dir before status check --> "`pwd`
+#echo "current dir before status check --> "`pwd`
 #check cdsw status
+./cdsw_status-testing.sh
+
+# Check CDSW again...  Runs long sometimes
+echo
+echo
+echo "Full Output of CDSW status..."
+echo
+echo
+cdsw status
+
+#check cdsw status again
 ./cdsw_status-testing.sh
 
 # change to dir for superset
 cd $dir/../components/install_superset
 echo "current dir at this stage --> "`pwd`
-#./bin/setup.sh
+./bin/setup.sh
 
 # return to starting dir
 echo "ending dir at install of superset is --> "`pwd`
