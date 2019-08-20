@@ -161,7 +161,6 @@ while [ $counter -lt 300 ]; do
        return
     fi
 done
-exit 1
 
 #cd $dir/../components/install_named
 
