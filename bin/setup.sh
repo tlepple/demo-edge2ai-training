@@ -144,23 +144,7 @@ PRIVATE_IP=`hostname --all-ip-addresses |  awk '{print $1;}'`
 curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/stop"
 
 # check that cdsw is stopped before proceeding
-echo "cehcking status of cdsw (5 min max)"
-counter=0
-while [ $counter -lt 300 ]; do
-
-    CDSW_ROLE_STATE=`curl -u "admin:admin" -k -s GET http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/roles | jq -r '.items[0].roleState'`
-
-    if [ "$CDSW_ROLE_STATE" != 'STOPPED' ]; then
-       echo "CDSW is stopping..."
-       echo "sleeping for 20s"
-       echo;
-       sleep 20s
-       let counter=counter+20
-    else
-       echo "CDSW shutting down"
-       return
-    fi
-done
+./check_role_state.sh
 
 #cd $dir/../components/install_named
 
