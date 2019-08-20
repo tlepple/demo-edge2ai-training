@@ -46,26 +46,30 @@ log() {
 #########################################################
 log "BEGIN setup.sh"
 
-#########################################################
-# Install component "DNS"
-#########################################################
-log "Begin install of DNS"
+#####################################################
+# first check if JQ is installed
+#####################################################
+log "Installing jq"
 
-cd $dir/../components/install_named
+jq_v=`jq --version 2>&1`
+if [[ $jq_v = *"command not found"* ]]; then
+  if [[ $machine = "Mac" ]]; then
+    sudo curl -L -s -o jq "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-osx-amd64"
+  else
+    sudo curl -L -s -o jq "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
+  fi 
+  sudo chmod +x ./jq
+  sudo cp jq /usr/bin
+else
+  log "jq already installed. Skipping"
+fi
 
-#echo "is this DNS dir --> "`pwd`
-# run the install of bind
-./bin/setup.sh
-
-#sleep 20 
-
-# return to starting dir
-#echo "ending dir is --> "`pwd`
-cd $dir
-log "Completed install of DNS"
-
-#echo "current dir at the end of this script--> "`pwd`
-#echo "current value of dir variable is -->"$dir
+jq_v=`jq --version 2>&1`
+if [[ $jq_v = *"command not found"* ]]; then
+  log "error installing jq. Please see README and install manually"
+  echo "Error installing jq. Please see README and install manually"
+  exit 1 
+fi  
 
 
 #########################################################
@@ -129,6 +133,71 @@ log "Completed install of Superset"
 
 echo "current dir at the end of this script--> "`pwd`
 echo "current value of dir variable is -->"$dir
+
+#########################################################
+# Install component "DNS"
+#########################################################
+#log "Begin install of DNS"
+
+# stop cdsw
+PRIVATE_IP=`hostname --all-ip-addresses |  awk '{print $1;}'`
+curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/stop"
+
+# check that cdsw is stopped before proceeding
+echo "cehcking status of cdsw (5 min max)"
+counter=0
+while [ $counter -lt 300 ]; do
+
+    CDSW_ROLE_STATE=`curl -u "admin:admin" -k -s GET http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/roles | jq -r '.items[0].roleState'`
+
+    if [ "$CDSW_ROLE_STATE" != 'STOPPED' ]; then
+       echo "CDSW is stopping..."
+       echo "sleeping for 20s"
+       echo;
+       sleep 20s
+       let counter=counter+20
+    else
+       echo "CDSW shutting down"
+       return
+    fi
+done
+exit 1
+
+#cd $dir/../components/install_named
+
+#echo "is this DNS dir --> "`pwd`
+# run the install of bind
+#./bin/setup.sh
+
+#sleep 20
+
+
+# restart cdsw
+curl -X POST -u "admin:admin" "http://10.0.0.172:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/start"
+
+#check cdsw status
+./cdsw_status-testing.sh
+
+# Check CDSW again...  Runs long sometimes
+echo
+echo
+echo "Full Output of CDSW status..."
+echo
+echo
+cdsw status
+echo
+echo
+
+#check cdsw status again
+./cdsw_status-testing.sh
+
+# return to starting dir
+#echo "ending dir is --> "`pwd`
+#cd $dir
+#log "Completed install of DNS"
+
+#echo "current dir at the end of this script--> "`pwd`
+#echo "current value of dir variable is -->"$dir
 
 #########################################################
 # Print services URLs
