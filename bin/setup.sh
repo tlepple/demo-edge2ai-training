@@ -87,15 +87,11 @@ cd $dir/../components/install_forkedOneNode
 #./setup.sh aws cdsw_template.json /dev/xvdc
 ./setup.sh $CLOUD_PROVIDER $CLUSTER_TEMPLATE $BLOCK_DEVICE_LOCATION
 
-#sleep 20
-
 # return to starting dir
 #echo "ending dir of this stage is --> "`pwd`
 cd $dir
 log "Completed install of forkedOneNode"
 
-#echo "current dir at the end of this stage --> "`pwd`
-#echo "current value of dir variable is -->"$dir
 
 #########################################################
 # Install component "Supeset"
@@ -119,7 +115,7 @@ echo
 echo
 
 #check cdsw status again
-./cdsw_status-testing.sh
+#./cdsw_status-testing.sh
 
 # change to dir for superset
 cd $dir/../components/install_superset
@@ -150,9 +146,7 @@ curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeC
 
 #echo "is this DNS dir --> "`pwd`
 # run the install of bind
-#./bin/setup.sh
-
-#sleep 20
+./bin/setup.sh
 
 
 # restart cdsw
