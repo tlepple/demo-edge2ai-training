@@ -173,7 +173,7 @@ exit 1
 
 
 # restart cdsw
-curl -X POST -u "admin:admin" "http://10.0.0.172:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/start"
+curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/start"
 
 #check cdsw status
 ./cdsw_status-testing.sh
