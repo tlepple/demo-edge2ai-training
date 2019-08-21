@@ -14,11 +14,12 @@ log "Begin copy_files_2_dest.sh"
 log "Identify Active NIC and fix issues..."
 
 # set some ip and dns variables:
-GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
+ACTIVE_NIC=$(ifconfig -a | grep "UP,BROADCAST,RUNNING" | awk '{print $1}' | sed 's/.$//')
+#GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
+GETIP=`ip  -f inet a show $ACTIVE_NIC| grep inet| awk '{ print $2}' | cut -d/ -f1`
 GETDNSIP=`awk '/nameserver/{print $2}' /etc/resolv.conf`
 
 # identify the value set for active nic
-ACTIVE_NIC=$(ifconfig -a | grep "UP,BROADCAST,RUNNING" | awk '{print $1}' | sed 's/.$//')
 NIC_FILENAME="ifcfg-"$ACTIVE_NIC
 
 # backup orig files
