@@ -40,6 +40,9 @@ log() {
     echo -e "[$(date)] [$BASH_SOURCE: $BASH_LINENO] : $*"
     echo -e "[$(date)] [$BASH_SOURCE: $BASH_LINENO] : $*" >> $starting_dir/setup-all.log
 }
+# Load util functions.
+. $dir/bin/utils.sh
+
 
 #########################################################
 # BEGIN
@@ -102,7 +105,7 @@ log "check status of cdsw before starting superset install"
 
 #echo "current dir before status check --> "`pwd`
 #check cdsw status
-./cdsw_status-testing.sh
+check_cdsw
 
 # Check CDSW again...  Runs long sometimes
 echo
@@ -115,7 +118,7 @@ echo
 echo
 
 #check cdsw status again
-#./cdsw_status-testing.sh
+#check_cdsw
 
 # change to dir for superset
 cd $dir/../components/install_superset
@@ -140,7 +143,7 @@ PRIVATE_IP=`hostname --all-ip-addresses |  awk '{print $1;}'`
 curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/stop"
 
 # check that cdsw is stopped before proceeding
-./check_role_state.sh
+check_role_state
 
 #cd $dir/../components/install_named
 
@@ -153,7 +156,7 @@ curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeC
 curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/start"
 
 #check cdsw status
-./cdsw_status-testing.sh
+check_cdsw
 
 # Check CDSW again...  Runs long sometimes
 echo
@@ -166,7 +169,7 @@ echo
 echo
 
 #check cdsw status again
-./cdsw_status-testing.sh
+check_cdsw
 
 # return to starting dir
 #echo "ending dir is --> "`pwd`
