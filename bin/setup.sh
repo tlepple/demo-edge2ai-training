@@ -105,7 +105,7 @@ log "check status of cdsw before starting superset install"
 
 #echo "current dir before status check --> "`pwd`
 #check cdsw status
-check_cdsw
+#check_cdsw
 
 # Check CDSW again...  Runs long sometimes
 echo
