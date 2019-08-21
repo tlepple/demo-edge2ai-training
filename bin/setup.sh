@@ -136,7 +136,7 @@ echo "current value of dir variable is after superset -->"$dir
 #########################################################
 # Install component "DNS"
 #########################################################
-#log "Begin install of DNS"
+log "Begin install of DNS"
 
 # stop cdsw
 PRIVATE_IP=`hostname --all-ip-addresses |  awk '{print $1;}'`
