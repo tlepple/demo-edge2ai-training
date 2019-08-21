@@ -185,7 +185,7 @@ echo "current value of dir variable is -->"$dir
 log "echo services URLs"
 
 # run the echo serivces
-./echo_service_conns.sh
+./$dir/echo_service_conns.sh
 
 echo "change to original directory at start of scripts"
 cd $starting_dir
