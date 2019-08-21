@@ -42,58 +42,6 @@ log() {
 }
 # Load util functions.
 . $starting_dir/bin/utils.sh
-#########################################################
-# check cdsw status
-#########################################################
-
-#check_cdsw(){
-#  echo "Checking CDSW status (for 10 min max)"
-#  counter=0
-#  while [ $counter -lt 600 ]; do
-#      
-#    STATUS_CHECK=`cdsw status | tail -1`
-#    if [ "$STATUS_CHECK" != 'Cloudera Data Science Workbench is ready!' ]; then
-#      echo "CDSW Status --> "$STATUS_CHECK
-#      echo "sleeping for 20s"
-#      echo;
-#      sleep 20s
-#      let counter=counter+20
-#    else
-#      echo "CDSW is ready!!!!"
-#      return
-#    fi
-#  done
-#  echo "CDSW is not ready after 10 minutes.  Exiting...";
-#  exit 1
-#  
-#}
-
-#########################################################
-# check the role state from api
-#########################################################
-
-#check_role_state(){
-#  echo "Checking CDSW role state (for 5 min max)"
-#  counter=0
-#  while [ $counter -lt 300 ]; do
-#    CDSW_ROLE_STATE=`curl -u "admin:admin" -k -s GET http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/roles | jq -r '.items[0].roleState'`
-#
-#    if [ "$CDSW_ROLE_STATE" != 'STOPPED' ]; then
-#       echo "CDSW Status --> "$CDSW_ROLE_STATE
-#       echo "sleeping for 20s"
-#       echo;
-#       sleep 20s
-#       let counter=counter+20
-#    else
-#       echo "CDSW is STOPPED"
-#       return  
-#    fi
-#  done
-#  echo "CDSW did not stop after 5 minutes.  Exiting...";
-#  exit 1
-#
-#}
-
 
 
 #########################################################
@@ -140,7 +88,7 @@ cd $dir/../components/install_forkedOneNode
 
 #need to pass in some variables
 #./setup.sh aws cdsw_template.json /dev/xvdc
-#./setup.sh $CLOUD_PROVIDER $CLUSTER_TEMPLATE $BLOCK_DEVICE_LOCATION
+./setup.sh $CLOUD_PROVIDER $CLUSTER_TEMPLATE $BLOCK_DEVICE_LOCATION
 
 # return to starting dir
 #echo "ending dir of this stage is --> "`pwd`
@@ -175,7 +123,7 @@ echo
 # change to dir for superset
 cd $dir/../components/install_superset
 echo "current dir at this stage --> "`pwd`
-#./bin/setup.sh
+./bin/setup.sh
 
 # return to starting dir
 echo "ending dir at install of superset is --> "`pwd`
@@ -183,7 +131,7 @@ cd $dir
 log "Completed install of Superset"
 
 echo "current dir at the end of this script--> "`pwd`
-echo "current value of dir variable is -->"$dir
+echo "current value of dir variable is after superset -->"$dir
 
 #########################################################
 # Install component "DNS"
@@ -197,11 +145,11 @@ curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeC
 # check that cdsw is stopped before proceeding
 check_role_state
 
-#cd $dir/../components/install_named
+cd $dir/../components/install_named
 
 echo "is this DNS dir --> "`pwd`
 # run the install of bind
-#./bin/setup.sh
+./bin/setup.sh
 
 
 # restart cdsw
