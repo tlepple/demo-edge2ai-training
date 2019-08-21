@@ -17,7 +17,8 @@ FINAL_INSTALL_PROPS_FILE=install.properties
 GETHOST=`hostname -f`
 GETSHORT=`hostname --short`
 GETDOMAIN=`hostname --domain`
-GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
+#GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
+GETIP=`hostname -I`
 GETDNSIP=`awk '/nameserver/{print $2}' /etc/resolv.conf`
 
 # create the new file from template
