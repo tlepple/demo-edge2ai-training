@@ -18,7 +18,7 @@ GETHOST=`hostname -f`
 GETSHORT=`hostname --short`
 GETDOMAIN=`hostname --domain`
 #GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
-GETIP=`hostname -I`
+GETIP=`ifconfig | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1' | sed '1 d' | head -n1;`
 GETDNSIP=`awk '/nameserver/{print $2}' /etc/resolv.conf`
 
 # create the new file from template
