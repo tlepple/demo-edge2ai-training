@@ -11,6 +11,12 @@ dnssec-validation auto;
 dnssec-lookaside auto;
 auth-nxdomain no;    # conform to RFC1035
 
+recursion yes;
+forwarders {
+        PRIMARY_DNSHOST_IP_VALUE;
+    };
+forward only;
+
 zone-statistics yes;
 max-cache-ttl 3600;
 max-ncache-ttl 3600;
