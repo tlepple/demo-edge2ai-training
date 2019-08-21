@@ -125,6 +125,10 @@ export FLASK_APP=superset
 
 flask fab create-admin --username "admin" --firstname "Tom" --lastname "Brown" --email "tom@tom.com" --password "admin" --password "admin"
 
+# import the impala datasource with cli
+log "Import impala datasource"
+superset import_datasources -p $dir/../files/import_impala_data_source.yaml
+
 # deactivate the virtualenv
 deactivate
 
