@@ -129,6 +129,9 @@ flask fab create-admin --username "admin" --firstname "Tom" --lastname "Brown" -
 log "Import impala datasource"
 superset import_datasources -p $dir/../files/import_impala_data_source.yaml
 
+# import the dashboard
+superset import_dashboards -p $dir/../files/edge2aiDashboard.json
+
 # deactivate the virtualenv
 deactivate
 
@@ -155,6 +158,17 @@ systemctl daemon-reload
 # start superset
 log "starting superset"
 systemctl start superset
+
+#########################################################
+# restart superset
+#########################################################
+#log "stop superset service"
+#systemctl stop superset
+
+#sleep 20
+
+#log "start superset service"
+#systemctl start superset
 
 #########################################################
 #  END setup of superset
