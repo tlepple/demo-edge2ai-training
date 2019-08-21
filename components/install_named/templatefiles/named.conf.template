@@ -15,7 +15,6 @@ recursion yes;
 forwarders {
         PRIMARY_DNSHOST_IP_VALUE;
     };
-forward only;
 
 zone-statistics yes;
 max-cache-ttl 3600;
