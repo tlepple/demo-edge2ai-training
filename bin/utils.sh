@@ -26,7 +26,7 @@ check_cdsw(){
     fi
   done
   echo "CDSW is not ready after 10 minutes.  Exiting...";
-  exit 1
+  return
   
 }
 
@@ -52,7 +52,7 @@ check_role_state(){
     fi
   done
   echo "CDSW did not stop after 5 minutes.  Exiting...";
-  exit 1
+  return
 
   
 }
