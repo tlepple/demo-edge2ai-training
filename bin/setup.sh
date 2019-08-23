@@ -140,11 +140,14 @@ log "load nifi template"
 
 #get the root process group id for the main canvas:
 ROOT_PG_ID=`curl -k -s GET http://$GETIP:8080/nifi-api/process-groups/root | jq -r '.id'`
+echo $ROOT_PG_ID
 
 #  get the host ip:
 GETIP=`ip route get 1 | awk '{print $NF;exit}'`
+echo "GETIP --> "$GETIP
 
 # Upload the template
+echo "starting_dir --> "$starting_dir
 curl -k -s -F template=@"$starting_dir/components/nifi_templates/finalCDSWrestAPI.xml" -X POST http://$GETIP:8080/nifi-api/process-groups/$ROOT_PG_ID/templates/upload
 
 log "nifi template loaded"

@@ -14,7 +14,8 @@ log "Begin copy_files_2_dest.sh"
 log "Identify Active NIC and fix issues..."
 
 # set some ip and dns variables:
-ACTIVE_NIC=$(ifconfig -a | grep "UP,BROADCAST,RUNNING" | awk '{print $1}' | sed 's/.$//')
+#ACTIVE_NIC=$(ifconfig -a | grep "UP,BROADCAST,RUNNING" | awk '{print $1}' | sed 's/.$//')
+ACTIVE_NIC=`ip route get 1 | awk '{print $5;exit}'`
 #GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
 #GETIP=`ip  -f inet a show $ACTIVE_NIC| grep inet| awk '{ print $2}' | cut -d/ -f1`
 GETIP=`ip route get 1 | awk '{print $NF;exit}'`
