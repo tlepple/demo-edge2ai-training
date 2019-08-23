@@ -158,7 +158,7 @@ yum install -y python-pip
 pip install --upgrade pip
 pip install cm_client
 
-GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
+GETIP=`ip route get 1 | awk '{print $NF;exit}'`
 GETDOMAIN=`hostname --domain`
 
 sed -i "s/YourHostname/`hostname -f`/g" ./$TEMPLATE
@@ -175,5 +175,4 @@ python ./create_cluster.py $TEMPLATE
 service efm start
 #service minifi start
 
-GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
 echo "-- CM is ready.  Start a proxy and point your Chrome at --> http//$GETIP:7180 to follow progress in CM"
