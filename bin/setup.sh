@@ -134,6 +134,28 @@ log "Completed install of Superset"
 #echo "current value of dir variable is after superset -->"$dir
 
 #########################################################
+# load the nifi template via api
+#########################################################
+log "load nifi template"
+
+#get the root process group id for the main canvas:
+ROOT_PG_ID=`curl -k -s GET http://$GETIP:8080/nifi-api/process-groups/root | jq -r '.id'`
+
+#  get the host ip:
+GETIP=`ip route get 1 | awk '{print $NF;exit}'`
+
+# Upload the template
+curl -k -s -F template=@"$dir/../components/nifi_templates/finalCDSWrestAPI.xml" -X POST http://$GETIP:8080/nifi-api/process-groups/$ROOT_PG_ID/templates/upload
+
+log "nifi template loaded"
+
+# return to starting dir
+#echo "ending dir is --> "`pwd`
+#cd $dir
+#log "Completed install of DNS"
+
+
+#########################################################
 # Install component "DNS"
 #########################################################
 log "Begin install of DNS"
@@ -171,29 +193,10 @@ echo
 #check cdsw status again
 check_cdsw
 
-#########################################################
-# load the nifi template via api
-#########################################################
-log "load nifi template"
-
-#get the root process group id for the main canvas:
-ROOT_PG_ID=`curl -k -s GET http://$GETIP:8080/nifi-api/process-groups/root | jq -r '.id'`
-
-#  get the host ip:
-GETIP=`ip route get 1 | awk '{print $NF;exit}'`
-
-# Upload the template
-curl -k -s -F template=@"$dir/../components/nifi_templates/finalCDSWrestAPI.xml" -X POST http://$GETIP:8080/nifi-api/process-groups/$ROOT_PG_ID/templates/upload
-
-log "nifi template loaded"
-
-# return to starting dir
 #echo "ending dir is --> "`pwd`
 #cd $dir
 #log "Completed install of DNS"
 
-#echo "current dir at the end of this script--> "`pwd`
-#echo "current value of dir variable is -->"$dir
 
 #########################################################
 # Print services URLs
