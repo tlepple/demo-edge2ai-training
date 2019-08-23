@@ -145,7 +145,7 @@ ROOT_PG_ID=`curl -k -s GET http://$GETIP:8080/nifi-api/process-groups/root | jq 
 GETIP=`ip route get 1 | awk '{print $NF;exit}'`
 
 # Upload the template
-curl -k -s -F template=@"$dir/../components/nifi_templates/finalCDSWrestAPI.xml" -X POST http://$GETIP:8080/nifi-api/process-groups/$ROOT_PG_ID/templates/upload
+curl -k -s -F template=@"$starting_dir/../components/nifi_templates/finalCDSWrestAPI.xml" -X POST http://$GETIP:8080/nifi-api/process-groups/$ROOT_PG_ID/templates/upload
 
 log "nifi template loaded"
 
