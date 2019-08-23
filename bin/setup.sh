@@ -138,13 +138,13 @@ log "Completed install of Superset"
 #########################################################
 log "load nifi template"
 
-#get the root process group id for the main canvas:
-ROOT_PG_ID=`curl -k -s GET http://$GETIP:8080/nifi-api/process-groups/root | jq -r '.id'`
-echo $ROOT_PG_ID
-
 #  get the host ip:
 GETIP=`ip route get 1 | awk '{print $NF;exit}'`
 echo "GETIP --> "$GETIP
+
+#get the root process group id for the main canvas:
+ROOT_PG_ID=`curl -k -s GET http://$GETIP:8080/nifi-api/process-groups/root | jq -r '.id'`
+echo "root pg id -->"$ROOT_PG_ID
 
 # Upload the template
 echo "starting_dir --> "$starting_dir
