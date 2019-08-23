@@ -7,7 +7,7 @@
 ECHO_GETHOST=`hostname -f`
 ECHO_GETSHORT=`hostname --short`
 ECHO_GETDOMAIN=`hostname --domain`
-ECHO_GETIP=`hostname --all-ip-addresses |  awk '{print $1;}'`
+ECHO_GETIP=`ip route get 1 | awk '{print $NF;exit}'`
 
 echo
 echo
