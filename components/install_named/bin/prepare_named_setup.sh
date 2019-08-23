@@ -18,8 +18,9 @@ GETHOST=`hostname -f`
 GETSHORT=`hostname --short`
 GETDOMAIN=`hostname --domain`
 #GETIP=`hostname --all-ip-addresses |sed 's/^[ \t]*//;s/[ \t]*$//'`
-ACTIVE_NIC=$(ifconfig -a | grep "UP,BROADCAST,RUNNING" | awk '{print $1}' | sed 's/.$//')
-GETIP=`ip  -f inet a show $ACTIVE_NIC| grep inet| awk '{ print $2}' | cut -d/ -f1`
+#ACTIVE_NIC=$(ifconfig -a | grep "UP,BROADCAST,RUNNING" | awk '{print $1}' | sed 's/.$//')
+#GETIP=`ip  -f inet a show $ACTIVE_NIC| grep inet| awk '{ print $2}' | cut -d/ -f1`
+GETIP=`ip route get 1 | awk '{print $NF;exit}'`
 GETDNSIP=`awk '/nameserver/{print $2}' /etc/resolv.conf`
 
 # create the new file from template
