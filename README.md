@@ -66,7 +66,8 @@ cd ~/demo-edge2ai-training
 
 | Service       | Aprox Run Time    | 
 | ------------- |:-----------------:| 
-| DNS           | < 1 Min           |
-| forkedOneNode | 40 Min            | 
-| Superset      | 15 Min            | 
+| forkedOneNode |  20 Min           | 
+| Superset      |  12 Min           | 
+| DNS		| < 1 min	    |
+| CDSW Restart  |  15 min	    |
 
