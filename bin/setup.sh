@@ -145,7 +145,7 @@ ROOT_PG_ID=`curl -k -s GET http://$GETIP:8080/nifi-api/process-groups/root | jq 
 GETIP=`ip route get 1 | awk '{print $NF;exit}'`
 
 # Upload the template
-curl -k -s -F template=@"$starting_dir/../components/nifi_templates/finalCDSWrestAPI.xml" -X POST http://$GETIP:8080/nifi-api/process-groups/$ROOT_PG_ID/templates/upload
+curl -k -s -F template=@"$starting_dir/components/nifi_templates/finalCDSWrestAPI.xml" -X POST http://$GETIP:8080/nifi-api/process-groups/$ROOT_PG_ID/templates/upload
 
 log "nifi template loaded"
 
@@ -161,11 +161,11 @@ log "nifi template loaded"
 log "Begin install of DNS"
 
 # stop cdsw
-PRIVATE_IP=`hostname --all-ip-addresses |  awk '{print $1;}'`
-curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/stop"
+PRIVATE_IP=`ip route get 1 | awk '{print $NF;exit}'`
+#curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/stop"
 
 # check that cdsw is stopped before proceeding
-check_role_state
+#check_role_state
 
 cd $dir/../components/install_named
 
@@ -175,7 +175,8 @@ echo "is this DNS dir --> "`pwd`
 
 
 # restart cdsw
-curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/start"
+#curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/start"
+curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/restart"
 
 #check cdsw status
 check_cdsw
