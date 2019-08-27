@@ -182,7 +182,8 @@ PRIVATE_IP=`ip route get 1 | awk '{print $NF;exit}'`
 #curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/restart"
 
 #check cdsw status
-#check_cdsw
+log "check status of cdsw"
+check_cdsw
 
 # Check CDSW again...  Runs long sometimes
 echo
@@ -190,12 +191,12 @@ echo
 echo "Full Output of CDSW status..."
 echo
 echo
-#cdsw status
+cdsw status
 echo
 echo
 
 #check cdsw status again
-#check_cdsw
+check_cdsw
 
 #echo "ending dir is --> "`pwd`
 #cd $dir
