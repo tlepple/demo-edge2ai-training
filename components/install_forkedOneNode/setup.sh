@@ -163,7 +163,8 @@ GETDOMAIN=`hostname --domain`
 
 sed -i "s/YourHostname/`hostname -f`/g" ./$TEMPLATE
 #sed -i "s/YourCDSWDomain/cdsw.$PUBLIC_IP.nip.io/g" ~/OneNodeCDHCluster/$TEMPLATE
-sed -i "s/YourCDSWDomain/cdsw.$GETDOMAIN/g" ./$TEMPLATE
+#sed -i "s/YourCDSWDomain/cdsw.$GETDOMAIN/g" ./$TEMPLATE
+sed -i "s/YourCDSWDomain/cdsw.$GETIP.nip.io/g" ./$TEMPLATE
 sed -i "s/YourPrivateIP/`hostname -I | tr -d '[:space:]'`/g" ./$TEMPLATE
 sed -i "s#YourDockerDevice#$DOCKERDEVICE#g" ./$TEMPLATE
 

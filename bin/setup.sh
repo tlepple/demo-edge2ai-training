@@ -6,8 +6,8 @@
 
 case "$1" in
         aws)
-           # echo "server 169.254.169.123 prefer iburst minpoll 4 maxpoll 4" >> /etc/chrony.conf
-           # systemctl restart chronyd
+            echo "server 169.254.169.123 prefer iburst minpoll 4 maxpoll 4" >> /etc/chrony.conf
+            systemctl restart chronyd
             ;;
         azure)
            # umount /mnt/resource
@@ -161,7 +161,7 @@ log "nifi template loaded"
 #########################################################
 # Install component "DNS"
 #########################################################
-log "Begin install of DNS"
+#log "Begin install of DNS"
 
 # stop cdsw
 PRIVATE_IP=`ip route get 1 | awk '{print $NF;exit}'`
@@ -170,19 +170,19 @@ PRIVATE_IP=`ip route get 1 | awk '{print $NF;exit}'`
 # check that cdsw is stopped before proceeding
 #check_role_state
 
-cd $dir/../components/install_named
+#cd $dir/../components/install_named
 
-echo "is this DNS dir --> "`pwd`
+#echo "is this DNS dir --> "`pwd`
 # run the install of bind
-./bin/setup.sh
+#./bin/setup.sh
 
 
 # restart cdsw
 #curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/start"
-curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/restart"
+#curl -X POST -u "admin:admin" "http://$PRIVATE_IP:7180/api/v19/clusters/OneNodeCluster/services/cdsw/commands/restart"
 
 #check cdsw status
-check_cdsw
+#check_cdsw
 
 # Check CDSW again...  Runs long sometimes
 echo
@@ -190,12 +190,12 @@ echo
 echo "Full Output of CDSW status..."
 echo
 echo
-cdsw status
+#cdsw status
 echo
 echo
 
 #check cdsw status again
-check_cdsw
+#check_cdsw
 
 #echo "ending dir is --> "`pwd`
 #cd $dir
