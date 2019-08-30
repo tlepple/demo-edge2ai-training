@@ -140,15 +140,18 @@ log "load nifi template"
 
 #  get the host ip:
 GETIP=`ip route get 1 | awk '{print $NF;exit}'`
-echo "GETIP --> "$GETIP
+echo "GETIP --> "${GETIP}
 
 #get the root process group id for the main canvas:
-ROOT_PG_ID=`curl -k -s GET http://$GETIP:8080/nifi-api/process-groups/root | jq -r '.id'`
-echo "root pg id -->"$ROOT_PG_ID
+ROOT_PG_ID=`curl -k -s GET http://${GETIP}:8080/nifi-api/process-groups/root | jq -r '.id'`
+echo "root pg id -->"${ROOT_PG_ID}
+
+# Update the IP/hostname for Kafka and Kudu in the NiFi template
+sed -i "s/HOST_IP/${GETIP}/" ${starting_dir}/components/nifi_templates/cdsw_rest_api.xml
 
 # Upload the template
-echo "starting_dir --> "$starting_dir
-curl -k -s -F template=@"$starting_dir/components/nifi_templates/finalCDSWrestAPI.xml" -X POST http://$GETIP:8080/nifi-api/process-groups/$ROOT_PG_ID/templates/upload
+echo "starting_dir --> "${starting_dir}
+curl -k -s -F template=@"${starting_dir}/components/nifi_templates/cdsw_rest_api.xml" -X POST http://${GETIP}:8080/nifi-api/process-groups/${ROOT_PG_ID}/templates/upload
 
 log "nifi template loaded"
 
@@ -156,6 +159,15 @@ log "nifi template loaded"
 #echo "ending dir is --> "`pwd`
 #cd $dir
 #log "Completed install of DNS"
+
+#########################################################
+# Create the Kudu tables and views
+#########################################################
+log "Create Kudu tables and views"
+
+impala-shell -i localhost -f ${starting_dir}/components/hue_files/sensor-tbls-n-views.sql
+
+log "Kudu tables and views created"
 
 
 #########################################################
