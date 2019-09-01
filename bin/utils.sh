@@ -56,3 +56,55 @@ check_role_state(){
 
   
 }
+
+#########################################################
+# Start CM Service
+#########################################################
+
+start_cm_service() {
+  echo "Starting Cloudera Manager Services..."
+  curl -X POST -u "admin:admin" "http://${PRIVATE_IP}:7180/api/v19/cm/service/commands/start"
+  return
+
+}
+
+#########################################################
+# Stop CM Service
+#########################################################
+
+stop_cm_service() {
+  echo "Stopping Cloudera Manager Services..."
+  curl -X POST -u "admin:admin" "http://${PRIVATE_IP}:7180/api/v19/cm/service/commands/stop"
+  return
+
+}
+
+#########################################################
+# Start All Cluster Services
+#########################################################
+
+start_cluster_services() {
+  echo "Starting Cluster Services..."
+  curl -X POST -u "admin:admin" "http://${PRIVATE_IP}:7180/api/v19/clusters/${CLUSTER_NAME}/commands/start"
+  return
+
+}
+
+#########################################################
+# Stop All Cluster Services
+#########################################################
+
+stop_cluster_services() {
+  echo "Stopping Cluster Services..."
+  curl -X POST -u "admin:admin" "http://${PRIVATE_IP}:7180/api/v19/clusters/${CLUSTER_NAME}/commands/stop"
+  return
+
+}
+
+#########################################################
+# Get CM Status
+#########################################################
+
+get_cm_status () {
+CM_STATUS=`curl -X  GET -u "admin:admin" -k -s "http://${PRIVATE_IP}:7180/api/v19/cm/service" | jq -r '.serviceState'`
+}
