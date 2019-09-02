@@ -152,5 +152,34 @@ stop_cluster_services() {
 #########################################################
 
 get_cm_status () {
-CM_STATUS=`curl -X  GET -u "admin:admin" -k -s "http://${PRIVATE_IP}:7180/api/v19/cm/service" | jq -r '.serviceState'`
+    CM_STATUS=`curl -X  GET -u "admin:admin" -k -s "http://${PRIVATE_IP}:7180/api/v19/cm/service" | jq -r '.serviceState'`
 }
+
+#########################################################
+# Get Cluster Name
+#########################################################
+
+get_cluster_name () {
+    CLUSTER_NAME=`curl -X  GET -u "admin:admin" -k -s "http://${PRIVATE_IP}:7180/api/v19//clusters" | jq -r '.items[].name'`
+}
+
+#########################################################
+# Get Service State
+#########################################################
+
+get_service_state(){
+    get_cluster_name
+    
+    CURRENT_SERVICE_STATE=`curl -u "admin:admin" -k -s GET http://${PRIVATE_IP}:7180/api/v19/clusters/${CLUSTER_NAME}/services/$1 | jq -r '.serviceState'`
+}
+
+#########################################################
+# Get Installed Services
+#########################################################
+
+get_installed_services() {
+    get_cluster_name
+    
+    INSTALLED_SERVICES=`curl -X GET -u "admin:admin" -k -s "http://${PRIVATE_IP}:7180/api/v19/clusters/${CLUSTER_NAME}/services" | jq -r '.items[].name'`
+}
+
