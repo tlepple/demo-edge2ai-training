@@ -74,7 +74,10 @@ cd ~/demo-edge2ai-training
 
 ---
 
-# Start / Stop cluster services after initial install...
+*  The following commands are only used when starting or stopping services.   All services are running upon completion of initial setup...
+
+---
+### Start / Stop Services Commands:
 
 ```
 # Start all services:
