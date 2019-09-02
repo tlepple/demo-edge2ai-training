@@ -130,8 +130,14 @@ stop_cm_service() {
 #########################################################
 
 start_cluster_services() {
-  echo "Starting Cluster Services..."
-  curl -X POST -u "admin:admin" "http://${PRIVATE_IP}:7180/api/v19/clusters/${CLUSTER_NAME}/commands/start"
+    get_cluster_name
+    get_cluster_entity_status
+
+    if [ CLUSTER_ENTITY_STATUS == 'STOPPED' ]; then
+        echo "Starting Cluster Services..."
+        curl -X POST -u "admin:admin" "http://${PRIVATE_IP}:7180/api/v19/clusters/${CLUSTER_NAME}/commands/start"
+    fi
+
   return
 
 }
@@ -141,9 +147,15 @@ start_cluster_services() {
 #########################################################
 
 stop_cluster_services() {
-  echo "Stopping Cluster Services..."
-  curl -X POST -u "admin:admin" "http://${PRIVATE_IP}:7180/api/v19/clusters/${CLUSTER_NAME}/commands/stop"
-  return
+    get_cluster_name
+    get_cluster_entity_status
+
+    if [ CLUSTER_ENTITY_STATUS == 'STARTED' ]; then
+        echo "Stopping Cluster Services..."
+        curl -X POST -u "admin:admin" "http://${PRIVATE_IP}:7180/api/v19/clusters/${CLUSTER_NAME}/commands/stop"
+    fi
+
+    return
 
 }
 
@@ -183,3 +195,12 @@ get_installed_services() {
     INSTALLED_SERVICES=`curl -X GET -u "admin:admin" -k -s "http://${PRIVATE_IP}:7180/api/v19/clusters/${CLUSTER_NAME}/services" | jq -r '.items[].name'`
 }
 
+#########################################################
+# Get Cluster Entity Status 
+#########################################################
+
+get_cluster_entity_status() {
+    get_cluster_name
+    
+    CLUSTER_ENTITY_STATUS=`curl -X GET -u "admin:admin" -k -s "http://${PRIVATE_IP}:7180/api/v19/clusters/${CLUSTER_NAME}" | jq -r '.entityStatus'`
+}
