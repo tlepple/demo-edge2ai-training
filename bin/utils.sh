@@ -96,9 +96,32 @@ start_cm_service() {
 #########################################################
 
 stop_cm_service() {
-  echo "Stopping Cloudera Manager Services..."
-  curl -X POST -u "admin:admin" "http://${PRIVATE_IP}:7180/api/v19/cm/service/commands/stop"
-  return
+    # get the current status
+    get_cm_status
+
+    if [ ${CM_STATUS} == 'STARTED' ]; then
+        echo "Stopping CM Service"
+        curl -X POST -u "admin:admin" "http://${PRIVATE_IP}:7180/api/v19/cm/service/commands/stop"
+    fi
+
+    # check for 5 min if status is started
+    echo "Check to see if CM is stopped (for 5 min max)"
+    counter=0
+
+    while [ $counter -lt 300 ]; do
+        get_cm_status
+        if [ ${CM_STATUS} != 'STOPPED' ]; then
+            echo "CM Current Status is --> " ${CM_STATUS}
+            echo "sleeping for 20s"
+            echo;
+            sleep 20s
+            let counter=counter+20
+        else
+            echo "CM is stopped!"
+           return
+        fi
+    done
+    return
 
 }
 
