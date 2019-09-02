@@ -71,3 +71,18 @@ cd ~/demo-edge2ai-training
 | DNS		| < 1 min	    |
 | CDSW Restart  |  15 min	    |
 
+
+---
+
+# Start / Stop cluster services
+
+```
+# Start all services:
+cd ~/demo-edge2ai-training
+. bin/start_cluster.sh
+
+# Stop all services:
+cd ~/demo-edge2ai-training
+. bin/stop_cluster.sh
+
+```
