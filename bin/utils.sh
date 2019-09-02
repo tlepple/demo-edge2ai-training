@@ -222,3 +222,26 @@ isarray.equal () {
 #    [[ "$num" -ne 1 ]] && echo 'Okay'
     [[ "$num" -ne 1 ]] && ARRAY_EQ='YES'
 }
+
+#########################################################
+# All Service Status Equal
+#########################################################
+
+all_services_status_eq () {
+    get_installed_services
+
+    args=()
+
+    for value in ${INSTALLED_SERVICES}; do
+
+       get_service_state ${value}
+       echo "       "  ${value} " service state is --> " ${CURRENT_SERVICE_STATE}
+
+       args+=(${CURRENT_SERVICE_STATE})
+   done
+
+    echo "args array values --> " "${args[@]}"
+    isarray.equal "${args[@]}"
+
+    echo "IS Array Equals --> " ${ARRAY_EQ}
+}
