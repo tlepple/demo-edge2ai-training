@@ -243,5 +243,5 @@ all_services_status_eq () {
     echo "args array values --> " "${args[@]}"
     isarray.equal "${args[@]}"
 
-    echo "IS Array Equals --> " ${ARRAY_EQ}
+    echo "Is Array Equal ? --> " ${ARRAY_EQ}
 }
