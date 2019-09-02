@@ -74,7 +74,7 @@ cd ~/demo-edge2ai-training
 
 ---
 
-# Start / Stop cluster services
+# Start / Stop cluster services after initial install...
 
 ```
 # Start all services:
