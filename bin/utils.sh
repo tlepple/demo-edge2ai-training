@@ -203,3 +203,22 @@ get_cluster_entity_status() {
     
     CLUSTER_ENTITY_STATUS=`curl -X GET -u "admin:admin" -k -s "http://${PRIVATE_IP}:7180/api/v19/clusters/${CLUSTER_NAME}" | jq -r '.entityStatus'`
 }
+
+#########################################################
+# Is Array Equal function 
+#########################################################
+
+isarray.equal () {
+    local placeholder="$1"
+    local num=0
+    while (( $# )); do
+        if [[ "$1" != "$placeholder" ]]; then
+            num=1
+#            echo 'Bad' && break
+            ARRAY_EQ='NO' && break
+        fi
+        shift
+    done
+#    [[ "$num" -ne 1 ]] && echo 'Okay'
+    [[ "$num" -ne 1 ]] && ARRAY_EQ='YES'
+}
