@@ -10,7 +10,8 @@ export PRIVATE_IP=`ip route get 1 | awk '{print $NF;exit}'`
 
 #stop all cluster services:
 stop_cluster_services
-sleep 10s
+echo "stopping services..."
+sleep 30s
 echo
 
 #check all services are stopped
