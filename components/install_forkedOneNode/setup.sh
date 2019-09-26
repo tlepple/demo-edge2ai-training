@@ -132,6 +132,10 @@ sed -i "s/YourHostname/`hostname -f`/g" /opt/cloudera/cem/efm/conf/efm.propertie
 sed -i "s/YourHostname/`hostname -f`/g" /opt/cloudera/cem/minifi/conf/bootstrap.conf
 /opt/cloudera/cem/minifi/bin/minifi.sh install
 
+echo "-- Configure MiNiFi to run MQTT NAR"
+wget http://central.maven.org/maven2/org/apache/nifi/nifi-mqtt-nar/1.8.0/nifi-mqtt-nar-1.8.0.nar -P /opt/cloudera/cem/minifi/lib
+chown root:root /opt/cloudera/cem/minifi/lib/nifi-mqtt-nar-1.8.0.nar
+chmod 660 /opt/cloudera/cem/minifi/lib/nifi-mqtt-nar-1.8.0.nar
 
 echo "-- Enable passwordless root login via rsa key"
 ssh-keygen -f ~/myRSAkey -t rsa -N ""
@@ -172,8 +176,16 @@ sed -i "s/YourHostname/`hostname -f`/g" ./create_cluster.py
 
 python ./create_cluster.py $TEMPLATE
 
-# configure and start EFM and Minifi
-service efm start
-#service minifi start
+cho "-- Install Mosquitto and MQTT"
+yum install -y mosquitto
+pip install paho-mqtt
+systemctl enable mosquitto
+systemctl start mosquitto
+git clone https://github.com/phdata/edge2ai-workshop ~/edge2ai-workshop
+mv ~/edge2ai-workshop/mqtt.* ~
+mv ~/edge2ai-workshop/spark.iot* ~
 
+echo "-- Start EFM and Minifi"
+service efm start
+service minifi start
 echo "-- CM is ready.  Start a proxy and point your Chrome at --> http//$GETIP:7180 to follow progress in CM"
