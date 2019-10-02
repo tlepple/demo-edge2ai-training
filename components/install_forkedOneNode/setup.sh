@@ -164,11 +164,13 @@ pip install cm_client
 
 GETIP=`ip route get 1 | awk '{print $NF;exit}'`
 GETDOMAIN=`hostname --domain`
+GETPUBIP=`curl ifconfig.me`
 
 sed -i "s/YourHostname/`hostname -f`/g" ./$TEMPLATE
 #sed -i "s/YourCDSWDomain/cdsw.$PUBLIC_IP.nip.io/g" ~/OneNodeCDHCluster/$TEMPLATE
 #sed -i "s/YourCDSWDomain/cdsw.$GETDOMAIN/g" ./$TEMPLATE
-sed -i "s/YourCDSWDomain/cdsw.$GETIP.nip.io/g" ./$TEMPLATE
+#sed -i "s/YourCDSWDomain/cdsw.$GETIP.nip.io/g" ./$TEMPLATE
+sed -i "s/YourCDSWDomain/cdsw.$GETPUBIP.nip.io/g" ./$TEMPLATE
 sed -i "s/YourPrivateIP/`hostname -I | tr -d '[:space:]'`/g" ./$TEMPLATE
 sed -i "s#YourDockerDevice#$DOCKERDEVICE#g" ./$TEMPLATE
 
