@@ -178,7 +178,7 @@ sed -i "s/YourHostname/`hostname -f`/g" ./create_cluster.py
 
 python ./create_cluster.py $TEMPLATE
 
-cho "-- Install Mosquitto and MQTT"
+echo "-- Install Mosquitto and MQTT"
 yum install -y mosquitto
 pip install paho-mqtt
 systemctl enable mosquitto
