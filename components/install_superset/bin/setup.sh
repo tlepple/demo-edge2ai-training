@@ -95,7 +95,7 @@ cd ~/superset-install-oneNode/supersetenv
 pip install -r $dir/../files/requirements.txt
 
 log "Install Superset..."
-pip install superset
+pip install -Iv superset==0.28.1
 
 log "Upgrade superset DB"
 superset db upgrade
