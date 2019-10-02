@@ -24,7 +24,7 @@ log "BEGIN setup.sh"
 log "Install needed yum tools"
 
 yum groupinstall -y 'development tools'
-yum install -y zlib-dev openssl-devel sqlite-devel bzip2-devel xz-libs wget libffi-devel cyrus-sasl-devel
+yum install -y zlib-dev openssl-devel sqlite-devel bzip2-devel xz-libs xz-devel wget libffi-devel cyrus-sasl-devel
 
 #########################################################
 # Install isolated version of python v. 3.7.4
