@@ -92,10 +92,10 @@ log "Install Superset requirements..."
 
 # change dir
 cd ~/superset-install-oneNode/supersetenv
+
+# install all the superset items
 pip install -r $dir/../files/requirements.txt
 
-log "Install Superset..."
-pip install -Iv superset==0.28.1
 
 log "Upgrade superset DB"
 superset db upgrade
@@ -103,8 +103,6 @@ superset db upgrade
 log "Install sample data to superset"
 superset load_examples
 
-log "Install superset Impala drivers"
-pip install impyla
 
 log "create roles and permissions"
 superset init
