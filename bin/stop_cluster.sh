@@ -32,6 +32,11 @@ echo
 echo "Stopping EFM..."
 /opt/cloudera/cem/efm-1.0.0.1.0.0.0-54/bin/efm.sh stop
 echo
+
+echo "Stopping Superset..."
+systemctl stop superset
+echo
+
 echo "All Services Stopped!!!"
 echo
 
