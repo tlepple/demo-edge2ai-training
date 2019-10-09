@@ -27,8 +27,13 @@ while [ ${ARRAY_EQ} != 'YES' ]; do
     sleep 20s
 done
 
+# start EFM
+echo "Start Edge Flow Manager..
+echo"
+/opt/cloudera/cem/efm-1.0.0.1.0.0.0-54/bin/efm.sh start
+echo
 echo "All Services Started!!!"
-
+echo
 #check that CDSW is ready   
 check_cdsw
 

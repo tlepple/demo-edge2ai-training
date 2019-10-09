@@ -28,7 +28,12 @@ while [ ${ARRAY_EQ} != 'YES' ]; do
     sleep 20s
 done
 
+echo
+echo "Stopping EFM..."
+/opt/cloudera/cem/efm-1.0.0.1.0.0.0-54/bin/efm.sh stop
+echo
 echo "All Services Stopped!!!"
+echo
 
 #check cdsw has stopped all pods
 check_role_state
