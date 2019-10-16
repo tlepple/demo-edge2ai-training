@@ -66,7 +66,7 @@ yum clean all
 rm -rf /var/cache/yum/
 yum repolist
 
-echo "sleeping for 2 min will repos cleanup..."
+echo "sleeping for 2 min while repos cleanup..."
 sleep 2m
 echo "resuming install..."
 
