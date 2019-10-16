@@ -66,6 +66,10 @@ yum clean all
 rm -rf /var/cache/yum/
 yum repolist
 
+echo "sleeping for 2 min will repos cleanup..."
+sleep 2m
+echo "resuming install..."
+
 yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server
 yum install -y MariaDB-server MariaDB-client
 cat mariadb.config > /etc/my.cnf
