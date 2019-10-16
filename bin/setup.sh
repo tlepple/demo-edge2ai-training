@@ -10,8 +10,8 @@ case "$1" in
             systemctl restart chronyd
             ;;
         azure)
-           # umount /mnt/resource
-           # mount /dev/sdb1 /opt
+            umount /mnt/resource
+            mount /dev/sdb1 /opt
             ;;
         gcp)
             ;;
