@@ -40,8 +40,8 @@ DOCKERDEVICE=$3
 
 echo "-- Configure networking"
 #PUBLIC_IP=`curl https://api.ipify.org/`
-hostnamectl set-hostname `hostname -f`
-echo "`hostname -I` `hostname`" >> /etc/hosts
+#hostnamectl set-hostname `hostname -f`
+#echo "`hostname -I` `hostname`" >> /etc/hosts
 sed -i "s/HOSTNAME=.*/HOSTNAME=`hostname`/" /etc/sysconfig/network
 iptables-save > ~/firewall.rules
 systemctl disable firewalld

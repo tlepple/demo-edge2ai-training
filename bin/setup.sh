@@ -8,10 +8,18 @@ case "$1" in
         aws)
             echo "server 169.254.169.123 prefer iburst minpoll 4 maxpoll 4" >> /etc/chrony.conf
             systemctl restart chronyd
+	    echo "-- Configure networking"
+	    #PUBLIC_IP=`curl https://api.ipify.org/`
+	    hostnamectl set-hostname `hostname -f`
+	    echo "`hostname -I` `hostname`" >> /etc/hosts
             ;;
         azure)
             umount /mnt/resource
             mount /dev/sdb1 /opt
+            echo "-- Configure networking"
+            #PUBLIC_IP=`curl https://api.ipify.org/`
+            hostnamectl set-hostname `hostname`.xx.internal.cloudapp.net
+            echo "`hostname -I` `hostname`" >> /etc/hosts
             ;;
         gcp)
             ;;
