@@ -1,4 +1,4 @@
-# Edge2AI Training
+# Edge2AI Environment Setup
 
 ---
 ---
@@ -105,7 +105,7 @@ cd ~/demo-edge2ai-training
 *  The following commands are only used when starting or stopping services. All services are running upon completion of initial setup...
 
 ---
-### Start / Stop Cloudera Cluster Services running in Cloudera Manager with these commands:
+### Start / Stop services running in Cloudera Manager with these commands:
 
 ```
 # Start all services:
