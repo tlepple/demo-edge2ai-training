@@ -22,6 +22,8 @@ case "$1" in
             echo "`hostname -I` `hostname`" >> /etc/hosts
             ;;
         gcp)
+            hostnamectl set-hostname `hostname -f`
+            echo "`hostname -I` `hostname`" >> /etc/hosts
             ;;
         *)
             echo $"Usage: $0 {aws|azure|gcp} template-file [docker-device]"
