@@ -68,7 +68,7 @@ pip==19.2.3
 ply==3.11     
 polyline==1.4.0    
 prison==0.1.2    
-py==1.8.0    
+py==1.10.0    
 pycparser==2.19     
 pydruid==0.5.6    
 PyHive==0.6.1    
