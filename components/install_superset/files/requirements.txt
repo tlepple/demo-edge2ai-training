@@ -64,7 +64,7 @@ openpyxl==2.4.11
 pandas==0.23.4   
 parsedatetime==2.4      
 pathlib2==2.3.4    
-pip==19.2.3   
+pip==21.1   
 ply==3.11     
 polyline==1.4.0    
 prison==0.1.2    
